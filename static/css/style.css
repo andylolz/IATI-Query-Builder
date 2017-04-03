@@ -1,0 +1,72 @@
+body {
+  background-color: #e8eef7;
+}
+
+footer {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid #ccc;
+}
+
+#main {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  margin: 10px auto;
+}
+
+@media (min-width: 1200px) {
+  .container {
+    width: 970px;
+  }
+}
+
+
+
+
+
+.table-container {
+  width: 100%;
+  overflow: scroll;
+  height: 400px;
+  margin: 20px 5px;
+}
+
+.dataTables_info {
+  font-size: 1.2em;
+  margin: 15px 0 20px 0;
+}
+
+#data-view td {
+  font-size: 1.1em;
+  padding: 4px 0;
+}
+
+dt, dd {
+  font-size: 1.1em;
+  padding-bottom: 4px;
+}
+
+.table.api-item {
+  width: 90%;
+  margin: 30px auto;
+}
+
+#download {
+  font-size: 1.2em;
+}
+
+#loading {
+  position: relative;
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  padding-top: 100px;
+  height: 400px;
+  z-index: 99;
+  background-color: #000;
+  opacity: 0.5;
+  color: #fff;
+  text-align: center;
+  font-size: 10vh;
+}
