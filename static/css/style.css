@@ -1,5 +1,6 @@
 body {
   background-color: #e8eef7;
+  padding-bottom: 410px;
 }
 
 footer {
@@ -20,25 +21,35 @@ footer {
   }
 }
 
+#download-csv {
+  display: none;
+  position: fixed;
+  top: 5px;
+  right: 5px;
+}
 
-
-
+#pinned-results {
+  position: fixed;
+  bottom: 0;
+  height: 400px;
+  width: 100%;
+  background: #fff;
+  display: none;
+}
 
 .table-container {
   width: 100%;
   overflow: scroll;
   height: 400px;
-  margin: 20px 5px;
-}
-
-.dataTables_info {
-  font-size: 1.2em;
-  margin: 15px 0 20px 0;
 }
 
 #data-view td {
   font-size: 1.1em;
   padding: 4px 0;
+}
+
+thead {
+  background-color: #eee;
 }
 
 dt, dd {
