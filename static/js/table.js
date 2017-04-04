@@ -3,17 +3,31 @@ $(function() {
     allow_single_deselect: true,
     search_contains: true
   };
-  $(".chosen-select").chosen(o);
+  $(".chosen-select").chosen(o)
 
-  $('select,input').on('change', function() {
-    refresh();
+  $('#submit').on('click', function() {
+    refresh()
   });
 
-  var refresh = function() {
-    $('#data-table').hide()
+  $('#reset').on('click', function() {
+    reset()
+  });
+
+  var reset = function() {
+    if ($.fn.dataTable.isDataTable('#data-table')) {
+      $('#data-table').DataTable().destroy()
+    }
+    $('#pinned-results').hide()
     $('#download-csv').hide()
+  }
+
+  var refresh = function() {
+    reset()
+    $('#data-table').hide()
     $('#loading').show()
+    $('#pinned-results').show()
     var datastore_url = 'http://datastore.iatistandard.org/api/1/access/'
+    var proxy_url = 'https://allorigins.me/get?method=raw&url='
 
     var format = $('[name=format]:checked').val()
     datastore_url += format
@@ -24,14 +38,34 @@ $(function() {
     datastore_url += '.csv'
 
     var reporting_org = $('#reporting-org').val()
+    var reporting_org_type = $('#reporting-org-type').val()
+    var sector = $('#sector').val()
+    var recipient_country = $('#recipient-country').val()
+    var recipient_region = $('#recipient-region').val()
+
+    var datastore_url_params = []
     if (reporting_org) {
-      datastore_url += '?reporting-org=' + reporting_org.join('|')
-    } else {
-      $('#loading').hide()
-      return
+      datastore_url_params.push('reporting-org=' + reporting_org.join('|'))
+    }
+    if (reporting_org_type) {
+      datastore_url_params.push('reporting-org.type=' + reporting_org_type.join('|'))
+    }
+    if (sector) {
+      datastore_url_params.push('sector=' + sector.join('|'))
+    }
+    if (recipient_country) {
+      datastore_url_params.push('recipient-country=' + recipient_country.join('|'))
+    }
+    if (recipient_region) {
+      datastore_url_params.push('recipient-region=' + recipient_region.join('|'))
     }
 
-    Papa.parse(datastore_url, {
+    if (datastore_url_params.length > 0) {
+      datastore_url += '?'
+      datastore_url += datastore_url_params.join('&')
+    }
+
+    Papa.parse(proxy_url + encodeURIComponent(datastore_url), {
       download: true,
       skipEmptyLines: true,
       worker: true,
@@ -40,7 +74,12 @@ $(function() {
         $table.html(dataToHtml(results.data));
         $('#loading').hide()
         $table.show()
-        // $table.DataTable();
+        $table.DataTable({
+        "paging":    false,
+        "ordering":  false,
+        "info":      false,
+        "searching": false
+        });
         // $table.floatThead({
         //   scrollContainer: function($table) {
         //     return $table.closest('.table-container');
